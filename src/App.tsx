@@ -76,35 +76,40 @@ function App() {
 
     return (
         <div className="w-screen p-5">
-            <div className={`h-screen flex justify-center items-center ${choosed ? "hidden" : "flex"}`}>
-                {examType.map(item => (
-                    <Card className="mx-5 hover:cursor-pointer" key={item.id}>
-                        <CardHeader onClick={() => {
-                            setChoosed(item.id)
-                        }}>
-                            <CardTitle>{item.title}</CardTitle>
-                            <CardDescription>{item.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p>Numero de questões: {item.questions}</p>
-                        </CardContent>
-                    </Card>
-                ))}
-            </div>
-
-            <div className={`${choosedYear ? "hidden" : "flex"}`}>
-                <div className="h-screen flex justify-center items-center">
-                    {poscompYears.map(item => (
-                        <Card className="mx-5 hover:cursor-pointer" key={item}>
+            {!choosed && !choosedYear && (
+                <div className={`h-screen flex justify-center items-center ${choosed ? "hidden" : "flex"}`}>
+                    {examType.map(item => (
+                        <Card className="mx-5 hover:cursor-pointer" key={item.id}>
                             <CardHeader onClick={() => {
-                                setChoosedYear(item)
+                                setChoosed(item.id)
                             }}>
-                                <CardTitle>{item}</CardTitle>
+                                <CardTitle>{item.title}</CardTitle>
+                                <CardDescription>{item.description}</CardDescription>
                             </CardHeader>
+                            <CardContent>
+                                <p>Numero de questões: {item.questions}</p>
+                            </CardContent>
                         </Card>
                     ))}
+                </div>)}
+
+
+            {choosed && !choosedYear && (
+                <div className={`${choosedYear ? "hidden" : "flex"}`}>
+                    <div className="h-screen flex justify-center items-center">
+                        {poscompYears.map(item => (
+                            <Card className="mx-5 hover:cursor-pointer" key={item}>
+                                <CardHeader onClick={() => {
+                                    setChoosedYear(item)
+                                }}>
+                                    <CardTitle>{item}</CardTitle>
+                                </CardHeader>
+                            </Card>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
+
 
             {currentQuestion && questionCount <= 70 && (
                 <div className={`${choosedYear ? "flex" : "hidden"} flex-col justify-center items-center w-full`}>
